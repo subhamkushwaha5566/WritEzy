@@ -20,7 +20,6 @@ function checkForAuthenticationCookie(cookieName){
         } catch (error) {}
        return next();
 
-
     }
 }
 
