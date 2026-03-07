@@ -1,0 +1,250 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+body {
+    font-family: 'Inter', sans-serif;
+    color: #333;
+    /* Animated Gradient Background */
+    background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+    background-size: 400% 400%;
+    animation: gradientBG 15s ease infinite;
+    min-height: 100vh;
+}
+
+@keyframes gradientBG {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* Glassmorphism Utilities */
+.glass-container {
+    position: relative;
+    z-index: 1;
+}
+
+.glass-card {
+    background: rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+    border-radius: 20px;
+    color: #212529; /* Dark text for contrast */
+}
+
+/* Ensure inputs in glass cards are completely legible */
+.glass-card .form-control {
+    background: rgba(255, 255, 255, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    color: #000;
+}
+.glass-card .form-control:focus {
+    background: rgba(255, 255, 255, 0.8);
+    box-shadow: 0 0 0 0.25rem rgba(255, 255, 255, 0.3);
+}
+
+.glass-card h1, .glass-card h2, .glass-card h3, .glass-card h4, .glass-card h5, .glass-card h6 {
+    color: #1a1a2e; /* Dark headers for contrast */
+    text-shadow: 0 1px 2px rgba(255,255,255,0.4);
+}
+
+.glass-card .text-muted {
+    color: #495057 !important; /* Darker muted text on glass */
+}
+
+
+/* ========================================= */
+/* NAVBAR STYLES                             */
+/* ========================================= */
+.custom-navbar {
+    background: #1a1a2e; /* Deep rich dark background */
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    padding: 15px 0;
+}
+.custom-navbar .navbar-brand {
+    font-weight: 800;
+    font-size: 1.5rem;
+    letter-spacing: 1px;
+    color: #fff !important;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.custom-navbar .navbar-brand i {
+    color: #00c6ff; /* Brand accent color */
+    font-size: 1.8rem;
+}
+.custom-navbar .nav-link {
+    color: rgba(255,255,255,0.8) !important;
+    font-weight: 500;
+    font-size: 1.05rem;
+    margin: 0 5px;
+    padding: 8px 15px !important;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+.custom-navbar .nav-link:hover, .custom-navbar .nav-link.active {
+    color: #fff !important;
+    background: rgba(255,255,255,0.1);
+}
+.custom-navbar .btn-signup {
+    background: #ffffff;
+    border: none;
+    color: #d65db1 !important;
+    font-weight: 800;
+    padding: 10px 24px !important;
+    border-radius: 50px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+    transition: all 0.3s ease;
+}
+.custom-navbar .btn-signup:hover {
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
+    color: #d65db1 !important;
+    background: #ffffff;
+}
+.custom-navbar .btn-signin {
+    background: rgba(255,255,255,0.15);
+    backdrop-filter: blur(5px);
+    border: 2px solid rgba(255,255,255,0.6);
+    color: white !important;
+    font-weight: 700;
+    padding: 8px 24px !important;
+    border-radius: 50px;
+    transition: all 0.3s ease;
+}
+.custom-navbar .btn-signin:hover {
+    border-color: #ffffff;
+    background: rgba(255,255,255,0.35);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(255,255,255,0.2);
+}
+.custom-navbar .dropdown-menu {
+    border: none;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    border-radius: 12px;
+    padding: 10px 0;
+}
+.custom-navbar .dropdown-item {
+    padding: 10px 20px;
+    font-weight: 500;
+    color: #333;
+    transition: background 0.2s ease, color 0.2s ease;
+}
+.custom-navbar .dropdown-item:hover {
+    background: #f8f9fa;
+    color: #0072ff;
+}
+
+/* ========================================= */
+/* HOME PAGE STYLES                          */
+/* ========================================= */
+.hero-banner {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 80px 0;
+    margin-bottom: 40px;
+    border-radius: 0 0 30px 30px;
+    box-shadow: 0 10px 30px rgba(118, 75, 162, 0.3);
+}
+.search-bar-wrap {
+    max-width: 600px;
+    margin: 0 auto;
+    position: relative;
+}
+.search-input {
+    padding: 15px 25px;
+    border-radius: 50px;
+    border: none;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    font-size: 1.1rem;
+}
+.search-btn {
+    position: absolute;
+    right: 5px;
+    top: 5px;
+    bottom: 5px;
+    border-radius: 50px;
+    padding: 0 25px;
+    font-weight: 600;
+}
+.blog-card {
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    border-radius: 15px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    background: rgba(255, 255, 255, 0.35);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+.blog-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+    background: rgba(255, 255, 255, 0.45);
+}
+.card-img-wrapper {
+    overflow: hidden;
+}
+.blog-card img {
+    transition: transform 0.5s ease;
+}
+.blog-card:hover img {
+    transform: scale(1.05);
+}
+.blog-badge {
+    background: linear-gradient(135deg, #ff0844 0%, #ffb199 100%);
+    color: #fff;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    display: inline-block;
+    margin-bottom: 10px;
+}
+
+/* ========================================= */
+/* PROFILE PAGE STYLES                       */
+/* ========================================= */
+.profile-header {
+    background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
+    border-radius: 20px;
+    padding: 40px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+}
+.profile-avatar {
+    width: 180px;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 5px solid white;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+.stat-card {
+    background: white;
+    border-radius: 15px;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    margin-top: 20px;
+    transition: transform 0.3s ease;
+}
+.stat-card:hover {
+    transform: translateY(-5px);
+}
+.stat-number {
+    font-size: 2rem;
+    font-weight: 800;
+    color: #00c6ff;
+}
+.stat-label {
+    color: #6c757d;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 0.85rem;
+}
+/* General Utilities */
+.object-fit-cover {
+    object-fit: cover;
+}
