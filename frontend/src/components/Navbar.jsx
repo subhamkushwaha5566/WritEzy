@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
+import { BACKEND_URL } from '../config';
 
 const Navbar = () => {
     const { user, logout } = useContext(AuthContext);
@@ -15,14 +16,14 @@ const Navbar = () => {
         if (!profileUrl || profileUrl === '/public/images/deafult.webp' || profileUrl === '/deafult.webp') {
             return `https://api.dicebear.com/7.x/adventurer/svg?seed=${name}&backgroundColor=b6e3f4,c0aede,d1d4f9,ffdfbf,ffd5dc`;
         }
-        return `http://${window.location.hostname}:5000${profileUrl}`;
+        return `${BACKEND_URL}${profileUrl}`;
     };
 
     return (
         <nav className="custom-navbar navbar navbar-expand-lg sticky-top border-bottom" style={{ background: 'linear-gradient(90deg, rgba(132, 94, 194, 0.9) 0%, rgba(214, 93, 177, 0.9) 50%, rgba(255, 150, 113, 0.9) 100%)', backdropFilter: 'blur(12px)', WebkitBackdropFilter: 'blur(12px)', borderBottomColor: 'rgba(255,255,255,0.2) !important', padding: '15px 0', boxShadow: '0 4px 20px rgba(0,0,0,0.15)' }}>
             <div className="container">
                 <Link className="navbar-brand d-flex align-items-center fw-bold text-white fs-4" to="/">
-                    <img src={`http://${window.location.hostname}:5000/logo.png`} alt="Logo" width="40" height="40" className="me-2 object-fit-contain" />
+                    <img src={`${BACKEND_URL}/logo.png`} alt="Logo" width="40" height="40" className="me-2 object-fit-contain" />
                     WritEzy
                 </Link>
                 <button className="navbar-toggler border-0 shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">

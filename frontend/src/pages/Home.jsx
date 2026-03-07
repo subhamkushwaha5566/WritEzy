@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link, useSearchParams } from 'react-router-dom';
+import { BACKEND_URL } from '../config';
 
 const Home = () => {
     const [blogs, setBlogs] = useState([]);
@@ -18,7 +19,7 @@ const Home = () => {
         const fetchBlogs = async () => {
             setLoading(true);
             try {
-                const res = await axios.get(`http://${window.location.hostname}:5000/api/blogs?search=${searchQuery}&category=${currentCategory}&page=${currentPage}`);
+                const res = await axios.get(`${BACKEND_URL}/api/blogs?search=${searchQuery}&category=${currentCategory}&page=${currentPage}`);
                 setBlogs(res.data.blogs);
                 setTotalPages(res.data.totalPages);
             } catch (err) {
@@ -100,7 +101,7 @@ const Home = () => {
                             <div className="col animate__animated animate__fadeInUp" key={blog._id}>
                                 <div className="card h-100 blog-card">
                                     <div className="card-img-wrapper">
-                                        <img src={`http://${window.location.hostname}:5000${blog.coverimageURL}`} className="card-img-top object-fit-cover" alt="Blog Cover" style={{ height: '220px' }} />
+                                        <img src={`${BACKEND_URL}${blog.coverimageURL}`} className="card-img-top object-fit-cover" alt="Blog Cover" style={{ height: '220px' }} />
                                     </div>
                                     <div className="card-body d-flex flex-column p-4">
                                         <span className={`blog-badge align-self-start ${blog.category ? 'bg-info text-white' : ''}`}>

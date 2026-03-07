@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import { Link, useSearchParams, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
+import { BACKEND_URL } from '../config';
 
 const Feed = () => {
     const [blogs, setBlogs] = useState([]);
@@ -22,7 +23,7 @@ const Feed = () => {
         const fetchFeed = async () => {
             setLoading(true);
             try {
-                const res = await axios.get(`http://${window.location.hostname}:5000/api/feed?page=${currentPage}`, { withCredentials: true });
+                const res = await axios.get(`${BACKEND_URL}/api/feed?page=${currentPage}`, { withCredentials: true });
                 setBlogs(res.data.blogs);
                 setTotalPages(res.data.totalPages);
             } catch (err) {
@@ -51,7 +52,7 @@ const Feed = () => {
                             <div className="col animate__animated animate__fadeInUp" key={blog._id}>
                                 <div className="card h-100 border-0 shadow-sm rounded-4 overflow-hidden blog-card">
                                     <div className="position-relative">
-                                        <img src={`http://${window.location.hostname}:5000${blog.coverimageURL}`} className="card-img-top object-fit-cover" alt="Blog Cover" style={{ height: '220px' }} />
+                                        <img src={`${BACKEND_URL}${blog.coverimageURL}`} className="card-img-top object-fit-cover" alt="Blog Cover" style={{ height: '220px' }} />
                                     </div>
                                     <div className="card-body d-flex flex-column p-4">
                                         <h5 className="card-title fw-bold text-dark mb-3 text-truncate" title={blog.title}>{blog.title}</h5>

@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 import { AuthContext } from '../context/AuthContext';
+import { BACKEND_URL } from '../config';
 
 const BlogView = () => {
     const { id } = useParams();
@@ -22,7 +23,7 @@ const BlogView = () => {
     useEffect(() => {
         const fetchBlog = async () => {
             try {
-                const res = await axios.get(`http://${window.location.hostname}:5000/api/blog/${id}`);
+                const res = await axios.get(`${BACKEND_URL}/api/blog/${id}`);
                 const fetchedBlog = res.data.blog;
                 setBlog(fetchedBlog);
                 setComments(res.data.comments);
@@ -44,7 +45,7 @@ const BlogView = () => {
     const handleLike = async () => {
         if (!user) return navigate('/signin');
         try {
-            const res = await axios.post(`http://${window.location.hostname}:5000/api/blog/like/${id}`, {}, { withCredentials: true });
+            const res = await axios.post(`${BACKEND_URL}/api/blog/like/${id}`, {}, { withCredentials: true });
             if (res.data.success) {
                 setBlog({ ...blog, likes: res.data.isLiked ? [...blog.likes, user._id] : blog.likes.filter(l => l !== user._id) });
             }
@@ -56,7 +57,7 @@ const BlogView = () => {
     const handleDelete = async () => {
         if (!window.confirm("Are you sure you want to delete this blog?")) return;
         try {
-            const res = await axios.post(`http://${window.location.hostname}:5000/api/blog/delete/${id}`, {}, { withCredentials: true });
+            const res = await axios.post(`${BACKEND_URL}/api/blog/delete/${id}`, {}, { withCredentials: true });
             if (res.data.success) {
                 navigate('/');
             }
@@ -71,7 +72,7 @@ const BlogView = () => {
         if (!commentText.trim()) return;
 
         try {
-            const res = await axios.post(`http://${window.location.hostname}:5000/api/blog/comment/${id}`, { content: commentText }, { withCredentials: true });
+            const res = await axios.post(`${BACKEND_URL}/api/blog/comment/${id}`, { content: commentText }, { withCredentials: true });
             if (res.data.success) {
                 setComments([{ ...res.data.comment, createdBy: user }, ...comments]);
                 setCommentText('');
@@ -132,7 +133,7 @@ const BlogView = () => {
                                 <div className={`d-flex align-items-center justify-content-between pb-3 border-bottom ${isDarkMode ? 'border-secondary' : ''}`}>
                                     <div className="d-flex align-items-center">
                                         <Link to={`/profile/${blog.createdBy._id}`} className="text-decoration-none d-flex align-items-center">
-                                            <img src={`http://${window.location.hostname}:5000${blog.createdBy.ProfileImageURL || blog.createdBy.profileImageURL || '/deafult.webp'}`} alt="Author" className="rounded-circle me-3 object-fit-cover shadow-sm" style={{ width: '50px', height: '50px' }} />
+                                            <img src={`${BACKEND_URL}${blog.createdBy.ProfileImageURL || blog.createdBy.profileImageURL || '/deafult.webp'}`} alt="Author" className="rounded-circle me-3 object-fit-cover shadow-sm" style={{ width: '50px', height: '50px' }} />
                                             <div>
                                                 <h6 className={`mb-0 fw-bold ${isDarkMode ? 'text-light' : 'text-dark'}`}>{blog.createdBy.fullname}</h6>
                                                 <small className={isDarkMode ? 'text-light-50' : 'text-muted'}>{new Date(blog.createdAt).toLocaleDateString()}</small>
@@ -173,7 +174,7 @@ const BlogView = () => {
                         </div>
 
                         {/* Content */}
-                        {!isFocusMode && <img src={`http://${window.location.hostname}:5000${blog.coverimageURL}`} className="img-fluid rounded-4 shadow-sm mb-5 w-100 object-fit-cover" style={{ maxHeight: '500px' }} alt="Cover" />}
+                        {!isFocusMode && <img src={`${BACKEND_URL}${blog.coverimageURL}`} className="img-fluid rounded-4 shadow-sm mb-5 w-100 object-fit-cover" style={{ maxHeight: '500px' }} alt="Cover" />}
                         
                         <div className={`blog-body fs-5 mb-5 ${isFocusMode ? 'fs-4' : ''}`} style={{ lineHeight: '1.9', letterSpacing: isFocusMode ? '0.3px' : 'normal' }} dangerouslySetInnerHTML={{ __html: getProcessedBody() }} />
                         </div>
@@ -184,7 +185,7 @@ const BlogView = () => {
                             <h3 className="fw-bold mb-4">Comments ({comments.length})</h3>
                             {user ? (
                                 <form onSubmit={handleCommentSubmit} className={`d-flex align-items-start mb-5 p-3 rounded-4 shadow-sm border ${isDarkMode ? 'bg-dark border-secondary' : 'bg-white'}`}>
-                                    <img src={`http://${window.location.hostname}:5000${user.ProfileImageURL || user.profileImageURL || '/deafult.webp'}`} alt="You" className="rounded-circle me-3 object-fit-cover" style={{ width: '45px', height: '45px' }} />
+                                    <img src={`${BACKEND_URL}${user.ProfileImageURL || user.profileImageURL || '/deafult.webp'}`} alt="You" className="rounded-circle me-3 object-fit-cover" style={{ width: '45px', height: '45px' }} />
                                     <div className="flex-grow-1">
                                         <textarea value={commentText} onChange={e => setCommentText(e.target.value)} className={`form-control border-0 rounded-3 px-3 py-2 mb-2 ${isDarkMode ? 'bg-secondary text-light' : 'bg-light text-dark'}`} rows="2" placeholder="Share your thoughts..." required></textarea>
                                         <div className="text-end">
@@ -201,7 +202,7 @@ const BlogView = () => {
                             <div className="comments-list mt-4">
                                 {comments.map(c => (
                                     <div key={c._id} className="d-flex mb-4">
-                                        <img src={`http://${window.location.hostname}:5000${c.createdBy?.ProfileImageURL || c.createdBy?.profileImageURL || '/deafult.webp'}`} alt="Avatar" className="rounded-circle me-3 shadow-sm object-fit-cover" style={{ width: '45px', height: '45px' }} />
+                                        <img src={`${BACKEND_URL}${c.createdBy?.ProfileImageURL || c.createdBy?.profileImageURL || '/deafult.webp'}`} alt="Avatar" className="rounded-circle me-3 shadow-sm object-fit-cover" style={{ width: '45px', height: '45px' }} />
                                         <div className={`p-3 rounded-4 border w-100 shadow-sm ${isDarkMode ? 'bg-secondary border-dark text-light' : 'bg-light text-dark'}`}>
                                             <h6 className="fw-bold mb-1">{c.createdBy?.fullname || 'Unknown'}</h6>
                                             <p className={`mb-0 ${isDarkMode ? 'text-light' : 'text-dark'}`}>{c.content}</p>

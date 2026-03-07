@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import { AuthContext } from '../context/AuthContext';
 import { Link } from 'react-router-dom';
+import { BACKEND_URL } from '../config';
 
 const Discussion = () => {
     const { user } = useContext(AuthContext);
@@ -11,7 +12,7 @@ const Discussion = () => {
 
     const fetchMessages = async () => {
         try {
-            const res = await axios.get(`http://${window.location.hostname}:5000/api/discussion`);
+            const res = await axios.get(`${BACKEND_URL}/api/discussion`);
             setMessages(res.data.messages);
         } catch (err) {
             console.error("Fetch Error:", err);
@@ -28,7 +29,7 @@ const Discussion = () => {
         if (!text.trim() || !user) return;
 
         try {
-            await axios.post(`http://${window.location.hostname}:5000/api/discussion`, { content: text, replyToId: parentId }, { withCredentials: true });
+            await axios.post(`${BACKEND_URL}/api/discussion`, { content: text, replyToId: parentId }, { withCredentials: true });
             if (!parentId) setContent('');
             setReplyToId(null);
             fetchMessages(); // refresh map to get populated replyTo details!
@@ -40,7 +41,7 @@ const Discussion = () => {
         if (!profileUrl || profileUrl === '/public/images/deafult.webp' || profileUrl === '/deafult.webp') {
             return `https://api.dicebear.com/7.x/adventurer/svg?seed=${name}&backgroundColor=b6e3f4,c0aede,d1d4f9,ffdfbf,ffd5dc`;
         }
-        return `http://${window.location.hostname}:5000${profileUrl}`;
+        return `${BACKEND_URL}${profileUrl}`;
     };
 
     return (

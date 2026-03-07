@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
+import { BACKEND_URL } from '../config';
 
 const SignUp = () => {
     const [fullname, setFullname] = useState('');
@@ -14,7 +15,7 @@ const SignUp = () => {
         e.preventDefault();
         setLoading(true);
         try {
-            const res = await axios.post(`http://${window.location.hostname}:5000/api/user/signup`, 
+            const res = await axios.post(`${BACKEND_URL}/api/user/signup`, 
                 { fullname, email, password },
                 { withCredentials: true }
             );

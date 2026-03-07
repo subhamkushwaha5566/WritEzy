@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { BACKEND_URL } from '../config';
 
 const Help = () => {
     const [statusMessage, setStatusMessage] = useState(null);
@@ -9,7 +10,7 @@ const Help = () => {
         const formData = new FormData(e.target);
         
         try {
-            const res = await axios.post(`http://${window.location.hostname}:5000/api/help`, Object.fromEntries(formData));
+            const res = await axios.post(`${BACKEND_URL}/api/help`, Object.fromEntries(formData));
             setStatusMessage({ type: 'success', text: res.data.success });
             e.target.reset();
         } catch (error) {

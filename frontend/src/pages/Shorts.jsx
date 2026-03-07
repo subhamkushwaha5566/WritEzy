@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import { AuthContext } from '../context/AuthContext';
 import { Link, useNavigate } from 'react-router-dom';
+import { BACKEND_URL } from '../config';
 
 const Shorts = () => {
     const { user } = useContext(AuthContext);
@@ -27,7 +28,7 @@ const Shorts = () => {
     const fetchShorts = async () => {
         setLoading(true);
         try {
-            const res = await axios.get(`http://${window.location.hostname}:5000/api/shorts`, { withCredentials: true });
+            const res = await axios.get(`${BACKEND_URL}/api/shorts`, { withCredentials: true });
             if (res.data.success) {
                 setShorts(res.data.shorts);
             }
@@ -75,7 +76,7 @@ const Shorts = () => {
         }
 
         try {
-            const res = await axios.post(`http://${window.location.hostname}:5000/api/shorts`, formData, {
+            const res = await axios.post(`${BACKEND_URL}/api/shorts`, formData, {
                 headers: { 'Content-Type': 'multipart/form-data' },
                 withCredentials: true
             });
@@ -94,7 +95,7 @@ const Shorts = () => {
 
     const handleLike = async (id) => {
         try {
-            const res = await axios.post(`http://${window.location.hostname}:5000/api/shorts/like/${id}`, {}, { withCredentials: true });
+            const res = await axios.post(`${BACKEND_URL}/api/shorts/like/${id}`, {}, { withCredentials: true });
             if (res.data.success) {
                 setShorts(shorts.map(s => {
                     if (s._id === id) {
@@ -127,7 +128,7 @@ const Shorts = () => {
                                 {error && <div className="alert alert-danger rounded-3 py-2">{error}</div>}
                                 <form onSubmit={handleSubmit}>
                                     <div className="d-flex align-items-start mb-3">
-                                        <img src={`http://${window.location.hostname}:5000${user.ProfileImageURL || user.profileImageURL || '/default.webp'}`} alt="Me" className="rounded-circle me-3 object-fit-cover shadow-sm" style={{ width: '45px', height: '45px' }} />
+                                        <img src={`${BACKEND_URL}${user.ProfileImageURL || user.profileImageURL || '/default.webp'}`} alt="Me" className="rounded-circle me-3 object-fit-cover shadow-sm" style={{ width: '45px', height: '45px' }} />
                                         <div className="flex-grow-1">
                                             <textarea 
                                                 className="form-control border-0 bg-transparent text-dark fs-5 custom-short-input" 
@@ -186,7 +187,7 @@ const Shorts = () => {
                                     <div key={short._id} className="card glass-card border-0 shadow-sm rounded-4 mb-4 overflow-hidden animate__animated animate__fadeInUp">
                                         {/* User Header */}
                                         <div className="d-flex align-items-center p-3 border-bottom border-light border-opacity-25 pb-2">
-                                            <img src={`http://${window.location.hostname}:5000${short.createdBy?.ProfileImageURL || short.createdBy?.profileImageURL || '/default.webp'}`} alt="Author" className="rounded-circle me-3 object-fit-cover border border-2 border-white" style={{ width: '40px', height: '40px' }} />
+                                            <img src={`${BACKEND_URL}${short.createdBy?.ProfileImageURL || short.createdBy?.profileImageURL || '/default.webp'}`} alt="Author" className="rounded-circle me-3 object-fit-cover border border-2 border-white" style={{ width: '40px', height: '40px' }} />
                                             <div>
                                                 <Link to={`/profile/${short.createdBy?._id}`} className="text-decoration-none fw-bold text-dark fs-6 d-block">{short.createdBy?.fullname}</Link>
                                                 <small className="text-muted" style={{ fontSize: '0.75rem' }}>{new Date(short.createdAt).toLocaleDateString()} at {new Date(short.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</small>
@@ -203,12 +204,12 @@ const Shorts = () => {
                                         {/* Media Attachment */}
                                         {short.mediaURL && (
                                             <div className="media-container bg-dark flex-grow-1 d-flex justify-content-center align-items-center">
-                                                {short.mediaType === 'image' && <img src={`http://${window.location.hostname}:5000${short.mediaURL}`} className="img-fluid w-100 object-fit-cover" style={{ maxHeight: '500px' }} alt="Post attachment" />}
-                                                {short.mediaType === 'video' && <video src={`http://${window.location.hostname}:5000${short.mediaURL}`} controls className="w-100" style={{ maxHeight: '500px', backgroundColor: '#000' }}></video>}
+                                                {short.mediaType === 'image' && <img src={`${BACKEND_URL}${short.mediaURL}`} className="img-fluid w-100 object-fit-cover" style={{ maxHeight: '500px' }} alt="Post attachment" />}
+                                                {short.mediaType === 'video' && <video src={`${BACKEND_URL}${short.mediaURL}`} controls className="w-100" style={{ maxHeight: '500px', backgroundColor: '#000' }}></video>}
                                                 {short.mediaType === 'audio' && (
                                                     <div className="w-100 p-4 bg-light bg-opacity-75 d-flex flex-column align-items-center">
                                                         <i className="bi bi-music-player-fill fs-1 text-primary mb-3"></i>
-                                                        <audio src={`http://${window.location.hostname}:5000${short.mediaURL}`} controls className="w-100"></audio>
+                                                        <audio src={`${BACKEND_URL}${short.mediaURL}`} controls className="w-100"></audio>
                                                     </div>
                                                 )}
                                             </div>

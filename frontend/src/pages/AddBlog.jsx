@@ -2,6 +2,7 @@ import React, { useState, useContext, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
+import { BACKEND_URL } from '../config';
 
 const AddBlog = () => {
     const { user } = useContext(AuthContext);
@@ -31,7 +32,7 @@ const AddBlog = () => {
         formData.append('coverImage', coverImage);
 
         try {
-            const res = await axios.post(`http://${window.location.hostname}:5000/api/blog`, formData, {
+            const res = await axios.post(`${BACKEND_URL}/api/blog`, formData, {
                 headers: { 'Content-Type': 'multipart/form-data' },
                 withCredentials: true
             });

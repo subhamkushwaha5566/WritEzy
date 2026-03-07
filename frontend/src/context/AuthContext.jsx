@@ -1,5 +1,6 @@
 import React, { createContext, useState, useEffect } from 'react';
 import axios from 'axios';
+import { BACKEND_URL } from '../config';
 
 export const AuthContext = createContext();
 
@@ -27,7 +28,7 @@ export const AuthProvider = ({ children }) => {
 
     const logout = async () => {
         try {
-            await axios.post(`http://${window.location.hostname}:5000/api/user/logout`, {}, { withCredentials: true });
+            await axios.post(`${BACKEND_URL}/api/user/logout`, {}, { withCredentials: true });
         } catch (error) {
             console.error("Logout error", error);
         }

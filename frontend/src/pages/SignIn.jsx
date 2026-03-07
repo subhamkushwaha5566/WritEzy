@@ -2,6 +2,7 @@ import React, { useState, useContext } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 import { AuthContext } from '../context/AuthContext';
+import { BACKEND_URL } from '../config';
 
 const SignIn = () => {
     const [email, setEmail] = useState('');
@@ -15,7 +16,7 @@ const SignIn = () => {
         e.preventDefault();
         setLoading(true);
         try {
-            const res = await axios.post(`http://${window.location.hostname}:5000/api/user/signin`, 
+            const res = await axios.post(`${BACKEND_URL}/api/user/signin`, 
                 { email, password },
                 { withCredentials: true }
             );

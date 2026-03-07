@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import axios from 'axios';
 import { AuthContext } from '../context/AuthContext';
+import { BACKEND_URL } from '../config';
 
 const Profile = () => {
     const { id } = useParams();
@@ -14,7 +15,7 @@ const Profile = () => {
     useEffect(() => {
         const fetchProfile = async () => {
             try {
-                const res = await axios.get(`http://${window.location.hostname}:5000/api/user/profile/${id}`);
+                const res = await axios.get(`${BACKEND_URL}/api/user/profile/${id}`);
                 setProfileUser(res.data.userProfile);
                 setBlogs(res.data.blogs);
                 setTotalLikes(res.data.totalLikes);
@@ -29,7 +30,7 @@ const Profile = () => {
 
     const handleFollowToggle = async () => {
         try {
-            const res = await axios.post(`http://${window.location.hostname}:5000/api/user/follow/${id}`, {}, { withCredentials: true });
+            const res = await axios.post(`${BACKEND_URL}/api/user/follow/${id}`, {}, { withCredentials: true });
             if (res.data.success) {
                 setProfileUser(prev => ({
                     ...prev,
@@ -59,7 +60,7 @@ const Profile = () => {
         formData.append('avatar', file);
 
         try {
-            const res = await axios.post(`http://${window.location.hostname}:5000/api/user/upload-avatar`, formData, {
+            const res = await axios.post(`${BACKEND_URL}/api/user/upload-avatar`, formData, {
                 headers: { 'Content-Type': 'multipart/form-data' },
                 withCredentials: true
             });
@@ -82,7 +83,7 @@ const Profile = () => {
         if (!profileUrl || profileUrl === '/public/images/deafult.webp' || profileUrl === '/deafult.webp') {
             return `https://api.dicebear.com/7.x/adventurer/svg?seed=${name}&backgroundColor=b6e3f4,c0aede,d1d4f9,ffdfbf,ffd5dc`;
         }
-        return `http://${window.location.hostname}:5000${profileUrl}`;
+        return `${BACKEND_URL}${profileUrl}`;
     };
 
     return (
@@ -137,7 +138,7 @@ const Profile = () => {
                             blogs.map(blog => (
                                 <div className="col" key={blog._id}>
                                     <div className="card h-100 border-0 shadow-sm rounded-4 overflow-hidden blog-card">
-                                        <img src={`http://${window.location.hostname}:5000${blog.coverimageURL}`} className="card-img-top object-fit-cover" alt="Cover" style={{ height: '200px' }} />
+                                        <img src={`${BACKEND_URL}${blog.coverimageURL}`} className="card-img-top object-fit-cover" alt="Cover" style={{ height: '200px' }} />
                                         <div className="card-body p-4 d-flex flex-column">
                                             <h5 className="card-title fw-bold text-dark text-truncate mb-auto">{blog.title}</h5>
                                             <div className="d-flex justify-content-between align-items-center mt-3 pt-3 border-top">
