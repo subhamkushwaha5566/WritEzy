@@ -23,7 +23,7 @@ router.post("/signin", async (req, res) => {
     const userPayload = require('../services/authentication').validateToken(token);
 
     return res
-      .cookie("token", token, { httpOnly: true })
+      .cookie("token", token, { httpOnly: true, sameSite: 'none', secure: true })
       .json({ success: true, token, user: userPayload });
   } catch (error) {
     return res.status(401).json({ error: "Incorrect Email or Password" });
@@ -109,7 +109,7 @@ router.post("/upload-avatar", upload.single("avatar"), async (req, res) => {
         const token = await require('../services/authentication').createTokenForUser(updatedUser);
         
         return res
-            .cookie("token", token, { httpOnly: true })
+            .cookie("token", token, { httpOnly: true, sameSite: 'none', secure: true })
             .json({ success: true, user: updatedUser, token });
         
     } catch (err) {
