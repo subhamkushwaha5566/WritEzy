@@ -60,8 +60,12 @@ const Profile = () => {
         formData.append('avatar', file);
 
         try {
+            const token = localStorage.getItem('token');
             const res = await axios.post(`${BACKEND_URL}/api/user/upload-avatar`, formData, {
-                headers: { 'Content-Type': 'multipart/form-data' },
+                headers: { 
+                    'Content-Type': 'multipart/form-data',
+                    'Authorization': `Bearer ${token}`
+                },
                 withCredentials: true
             });
             if (res.data.success) {

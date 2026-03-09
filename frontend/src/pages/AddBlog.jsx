@@ -32,8 +32,12 @@ const AddBlog = () => {
         formData.append('coverImage', coverImage);
 
         try {
+            const token = localStorage.getItem('token');
             const res = await axios.post(`${BACKEND_URL}/api/blog`, formData, {
-                headers: { 'Content-Type': 'multipart/form-data' },
+                headers: { 
+                    'Content-Type': 'multipart/form-data',
+                    'Authorization': `Bearer ${token}` 
+                },
                 withCredentials: true
             });
             if (res.data.success) {
