@@ -80,7 +80,7 @@ const Profile = () => {
     const isFollowing = currentUser && profileUser.followers?.includes(currentUser._id);
 
     const getAvatarUrl = (profileUrl, name) => {
-        if (!profileUrl || profileUrl === '/public/images/deafult.webp' || profileUrl === '/deafult.webp') {
+        if (!profileUrl || profileUrl.includes('deafult.webp') || profileUrl.includes('default.webp')) {
             return `https://api.dicebear.com/7.x/adventurer/svg?seed=${name}&backgroundColor=b6e3f4,c0aede,d1d4f9,ffdfbf,ffd5dc`;
         }
         return `${BACKEND_URL}${profileUrl}`;

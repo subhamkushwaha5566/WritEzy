@@ -21,10 +21,11 @@ router.post("/signin", async (req, res) => {
     const { email, password } = req.body;
     const token = await User.matchPasswordAndGenerateToken(email, password);
     const userPayload = require('../services/authentication').validateToken(token);
+    const user = await User.findOne({ email });
 
     return res
       .cookie("token", token, { httpOnly: true, sameSite: 'none', secure: true })
-      .json({ success: true, token, user: userPayload });
+      .json({ success: true, token, user });
   } catch (error) {
     return res.status(401).json({ error: "Incorrect Email or Password" });
   }

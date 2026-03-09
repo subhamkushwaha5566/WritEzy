@@ -44,7 +44,8 @@ app.use(express.urlencoded({extended:true}))
 app.use(cookieParser())
 app.use(checkForAuthenticationCookie("token"))
 app.use(express.static(path.resolve("./public/images")))
-app.use("/uploads", express.static(path.resolve("./public/uploads")))
+app.use("/uploads", express.static(path.resolve("./public/images/uploads")))
+app.use("/avatars", express.static(path.resolve("./public/images/avatars")))
 
 app.get("/api/blogs", async (req , res)=>{
     try {
