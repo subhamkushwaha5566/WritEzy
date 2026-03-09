@@ -9,15 +9,18 @@ function checkForAuthenticationCookie(cookieName){
             tokenCookieValue = req.headers.authorization.split(' ')[1];
         }
 
-        if(!tokenCookieValue){
+        if (!tokenCookieValue) {
             return next();
         }
 
-
         try {
-            const userPayload=validateToken(tokenCookieValue);
-            req.user=userPayload;
-        } catch (error) {}
+            // Sometimes localstorage adds quotes around the token strings, strip them
+            const cleanToken = tokenCookieValue.replace(/^"|"$/g, '').trim();
+            const userPayload = validateToken(cleanToken);
+            req.user = userPayload;
+        } catch (error) {
+            console.error("Token verification failed:", error.message);
+        }
        return next();
 
     }

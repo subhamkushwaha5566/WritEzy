@@ -30,7 +30,11 @@ const Profile = () => {
 
     const handleFollowToggle = async () => {
         try {
-            const res = await axios.post(`${BACKEND_URL}/api/user/follow/${id}`, {}, { withCredentials: true });
+            const token = localStorage.getItem('token');
+            const res = await axios.post(`${BACKEND_URL}/api/user/follow/${id}`, {}, { 
+                headers: { 'Authorization': `Bearer ${token}` },
+                withCredentials: true 
+            });
             if (res.data.success) {
                 setProfileUser(prev => ({
                     ...prev,

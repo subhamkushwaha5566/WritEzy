@@ -45,7 +45,11 @@ const BlogView = () => {
     const handleLike = async () => {
         if (!user) return navigate('/signin');
         try {
-            const res = await axios.post(`${BACKEND_URL}/api/blog/like/${id}`, {}, { withCredentials: true });
+            const token = localStorage.getItem('token');
+            const res = await axios.post(`${BACKEND_URL}/api/blog/like/${id}`, {}, { 
+                headers: { 'Authorization': `Bearer ${token}` },
+                withCredentials: true 
+            });
             if (res.data.success) {
                 setBlog({ ...blog, likes: res.data.isLiked ? [...blog.likes, user._id] : blog.likes.filter(l => l !== user._id) });
             }
@@ -57,7 +61,11 @@ const BlogView = () => {
     const handleDelete = async () => {
         if (!window.confirm("Are you sure you want to delete this blog?")) return;
         try {
-            const res = await axios.post(`${BACKEND_URL}/api/blog/delete/${id}`, {}, { withCredentials: true });
+            const token = localStorage.getItem('token');
+            const res = await axios.post(`${BACKEND_URL}/api/blog/delete/${id}`, {}, { 
+                headers: { 'Authorization': `Bearer ${token}` },
+                withCredentials: true 
+            });
             if (res.data.success) {
                 navigate('/');
             }
@@ -72,7 +80,11 @@ const BlogView = () => {
         if (!commentText.trim()) return;
 
         try {
-            const res = await axios.post(`${BACKEND_URL}/api/blog/comment/${id}`, { content: commentText }, { withCredentials: true });
+            const token = localStorage.getItem('token');
+            const res = await axios.post(`${BACKEND_URL}/api/blog/comment/${id}`, { content: commentText }, { 
+                headers: { 'Authorization': `Bearer ${token}` },
+                withCredentials: true 
+            });
             if (res.data.success) {
                 setComments([{ ...res.data.comment, createdBy: user }, ...comments]);
                 setCommentText('');

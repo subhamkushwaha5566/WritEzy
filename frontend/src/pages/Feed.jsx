@@ -23,7 +23,11 @@ const Feed = () => {
         const fetchFeed = async () => {
             setLoading(true);
             try {
-                const res = await axios.get(`${BACKEND_URL}/api/feed?page=${currentPage}`, { withCredentials: true });
+                const token = localStorage.getItem('token');
+                const res = await axios.get(`${BACKEND_URL}/api/feed?page=${currentPage}`, { 
+                    headers: { 'Authorization': `Bearer ${token}` },
+                    withCredentials: true 
+                });
                 setBlogs(res.data.blogs);
                 setTotalPages(res.data.totalPages);
             } catch (err) {
