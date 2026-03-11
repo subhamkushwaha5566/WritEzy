@@ -11,15 +11,21 @@ export const AuthProvider = ({ children }) => {
     // Initial check for existing token
     useEffect(() => {
         const storedUser = localStorage.getItem('user');
-        if (storedUser) {
+        const token = localStorage.getItem('token');
+
+        if (storedUser && token) {
             setUser(JSON.parse(storedUser));
+        } else if (storedUser && !token) {
+            // If they have legacy user state but no token, clear it to force re-login
+            localStorage.removeItem('user');
+            setUser(null);
         }
 
         // Setup axios interceptor to attach the token on every request
         const requestInterceptor = axios.interceptors.request.use((config) => {
-            const token = localStorage.getItem('token');
-            if (token) {
-                config.headers.Authorization = `Bearer ${token}`;
+            const currentToken = localStorage.getItem('token');
+            if (currentToken) {
+                config.headers.Authorization = `Bearer ${currentToken}`;
             }
             return config;
         });
