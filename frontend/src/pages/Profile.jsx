@@ -6,7 +6,7 @@ import { BACKEND_URL } from '../config';
 
 const Profile = () => {
     const { id } = useParams();
-    const { user: currentUser, setUser: setCurrentUser } = useContext(AuthContext);
+    const { user: currentUser, setUser: setCurrentUser, login } = useContext(AuthContext);
     const [profileUser, setProfileUser] = useState(null);
     const [blogs, setBlogs] = useState([]);
     const [totalLikes, setTotalLikes] = useState(0);
@@ -38,7 +38,7 @@ const Profile = () => {
             if (res.data.success) {
                 setProfileUser(prev => ({
                     ...prev,
-                    followers: res.data.isFollowing 
+                    followers: res.data.isFollowing
                         ? [...prev.followers, currentUser._id]
                         : prev.followers.filter(fid => fid !== currentUser._id)
                 }));
@@ -74,7 +74,7 @@ const Profile = () => {
             });
             if (res.data.success) {
                 setProfileUser(res.data.user);
-                setCurrentUser(res.data.user); // Update global contextual user so navbar updates!
+                login(res.data.user, res.data.token); // Update global contextual user and token
             }
         } catch (err) {
             console.error("Upload error", err);
@@ -119,7 +119,7 @@ const Profile = () => {
                                 <div className="mt-2 mt-md-4 text-center text-md-end">
                                     {currentUser && !isOwnProfile && (
                                         <button onClick={handleFollowToggle} className={`btn btn${isFollowing ? '-outline' : ''}-primary rounded-pill px-4 py-2 fw-bold shadow-sm`}>
-                                            <i className={`bi bi-${isFollowing ? 'person-check-fill' : 'person-plus-fill'} me-2`}></i> 
+                                            <i className={`bi bi-${isFollowing ? 'person-check-fill' : 'person-plus-fill'} me-2`}></i>
                                             {isFollowing ? 'Following' : 'Follow'}
                                         </button>
                                     )}
@@ -128,9 +128,9 @@ const Profile = () => {
                                     )}
                                 </div>
                             </div>
-                            
+
                             <hr className="mb-4 mt-2" />
-                            
+
                             <div className="row mt-4 px-1 g-2 row-cols-2">
                                 <div className="col"><div className="stat-card p-2 p-md-3 h-100"><div className="stat-number fs-3 fs-md-2">{blogs.length}</div><div className="stat-label">Blogs</div></div></div>
                                 <div className="col"><div className="stat-card p-2 p-md-3 h-100"><div className="stat-number fs-3 fs-md-2">{totalLikes}</div><div className="stat-label">Likes</div></div></div>

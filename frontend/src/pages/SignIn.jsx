@@ -16,13 +16,12 @@ const SignIn = () => {
         e.preventDefault();
         setLoading(true);
         try {
-            const res = await axios.post(`${BACKEND_URL}/api/user/signin`, 
+            const res = await axios.post(`${BACKEND_URL}/api/user/signin`,
                 { email, password },
                 { withCredentials: true }
             );
             if (res.data.success) {
-                localStorage.setItem('token', res.data.token);
-                login(res.data.user);
+                login(res.data.user, res.data.token);
                 navigate('/');
             }
         } catch (err) {
@@ -44,7 +43,7 @@ const SignIn = () => {
                     <p className="text-muted">Sign in to WritEzy to continue</p>
                 </div>
                 {error && <div className="alert alert-danger rounded-3 bg-danger text-white border-0 shadow-sm">{error}</div>}
-                
+
                 <form onSubmit={handleSubmit}>
                     <div className="mb-3">
                         <label className="form-label fw-semibold">Email address</label>
@@ -58,7 +57,7 @@ const SignIn = () => {
                     <button type="submit" disabled={loading} className="btn btn-dark w-100 rounded-pill fw-bold shadow mt-2" style={{ padding: '12px', background: 'linear-gradient(135deg, #111 0%, #333 100%)' }}>
                         {loading ? 'Signing In...' : 'Sign In'} <i className="bi bi-box-arrow-in-right ms-1"></i>
                     </button>
-                    
+
                     <div className="text-center mt-4">
                         <p className="mb-0 fw-medium">Don't have an account? <Link to="/signup" className="text-decoration-none fw-bold" style={{ color: '#0056b3' }}>Sign up</Link></p>
                     </div>
